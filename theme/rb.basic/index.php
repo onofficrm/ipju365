@@ -19,6 +19,7 @@ include_once(G5_THEME_PATH.'/head.php');
     <?php 
     $rb_main_layout = isset($rb_core['layout']) && $rb_core['layout'] ? $rb_core['layout'] : 'boon-build';
 
+<<<<<<< HEAD
     if (is_dir(G5_THEME_PATH . '/rb.layout/' . $rb_main_layout)) {
         // 레이아웃 인클루드
         include_once(G5_THEME_PATH . '/rb.layout/' . $rb_main_layout . '/index.php'); 
@@ -26,6 +27,9 @@ include_once(G5_THEME_PATH.'/head.php');
     } else {
         echo "<div class='no_data' style='border:0px;'><span class='no_data_section_ul1 font-B color-000'>레이아웃 설정이 올바르지 않습니다.</span><br>환경설정 패널에서 먼저 레이아웃을 설정해주세요.</div>";
     }
+=======
+include_once __DIR__ . '/boon-build-home.php';
+>>>>>>> 32527d7 (Fix homepage deployment warnings)
 
     ?>
     

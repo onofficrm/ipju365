@@ -166,6 +166,12 @@ if (isset($rb_core) && isset($rb_core['font'])) {
 } else {
     $font = '';
 }
+$font_path = G5_THEME_PATH.'/rb.fonts/'.$font.'/'.$font.'.css';
+if (!is_file($font_path)) {
+    $font = 'Pretendard';
+    $font_path = G5_THEME_PATH.'/rb.fonts/'.$font.'/'.$font.'.css';
+}
+$font_ver = is_file($font_path) ? filemtime($font_path) : G5_SERVER_TIME;
     
 add_javascript('<script src="'.G5_JS_URL.'/jquery-1.12.4.min.js"></script>', 0);
 add_javascript('<script src="'.G5_JS_URL.'/jquery-migrate-1.4.1.min.js"></script>', 0);
@@ -221,8 +227,14 @@ foreach ($rb_css_files as $rb_css_file) {
 
 add_javascript('<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>', 0);
 add_javascript('<script src="'.G5_THEME_URL.'/rb.js/swiper.js"></script>', 0);
+<<<<<<< HEAD
 add_javascript('<script src="'.G5_THEME_URL.'/rb.js/translate.js?ver='.(file_exists(G5_THEME_PATH.'/rb.js/translate.js') ? filemtime(G5_THEME_PATH.'/rb.js/translate.js') : time()).'"></script>', 0);
 add_stylesheet('<link rel="stylesheet" href="'.G5_THEME_URL.'/rb.fonts/'.$font.'/'.$font.'.css?ver='.filemtime(G5_THEME_PATH.'/rb.fonts/'.$font.'/'.$font.'.css').'" />', 0);  
+=======
+if (is_file($font_path)) {
+    add_stylesheet('<link rel="stylesheet" href="'.G5_THEME_URL.'/rb.fonts/'.$font.'/'.$font.'.css?ver='.$font_ver.'" />', 0);
+}
+>>>>>>> 32527d7 (Fix homepage deployment warnings)
 add_stylesheet('<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" />', 0);
 
 

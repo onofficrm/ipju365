@@ -19,6 +19,13 @@ include_once(G5_LIB_PATH.'/visit.lib.php');
 include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/popular.lib.php');
 
+if (!isset($rb_page_urls)) {
+    $rb_page_urls = '';
+}
+if (!isset($cb_que)) {
+    $cb_que = '';
+}
+
 if(defined('_INDEX_')) { // index에서만 실행
     include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
 }

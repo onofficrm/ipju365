@@ -36,6 +36,8 @@ $boon_build_footer_note = !empty($rb_builder['bu_12']) ? strip_tags($rb_builder[
 $boon_build_logo_url = !empty($rb_builder['bu_logo_pc']) ? G5_URL.'/data/logos/pc?ver='.G5_SERVER_TIME : '';
 $boon_build_logo_white_url = !empty($rb_builder['bu_logo_pc_w']) ? G5_URL.'/data/logos/pc_w?ver='.G5_SERVER_TIME : $boon_build_logo_url;
 $boon_build_kakao_url = !empty($rb_builder['bu_sns2']) ? $rb_builder['bu_sns2'] : (!empty($rb_builder['bu_sns1']) ? $rb_builder['bu_sns1'] : '');
+$boon_build_css_path = G5_THEME_PATH . '/boon-build/home.css';
+$boon_build_css_ver = is_file($boon_build_css_path) ? filemtime($boon_build_css_path) : G5_SERVER_TIME;
 
 $boon_build_nav = array(
     array('label' => '공감의 약속', 'href' => '#boon-build-why'),
@@ -99,6 +101,7 @@ $boon_build_faqs = array(
 );
 ?>
 
+<link rel="stylesheet" href="<?php echo G5_THEME_URL; ?>/boon-build/home.css?ver=<?php echo $boon_build_css_ver; ?>">
 <div class="boon-build">
     <header class="boon-build__site-header">
         <div class="boon-build__container">
