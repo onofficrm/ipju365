@@ -43,8 +43,7 @@ jobs:
 
           cd public_html
           put -O extend extend/_debugbar.extend.php
-          put -O extend extend/._debugbar.extend.php
-          put -O extend extend/._default.config.php
+          mput -O extend extend/._*.php
           put -O theme/rb.basic theme/rb.basic/index.php
           put -O theme/rb.basic theme/rb.basic/head.php
           put -O theme/rb.basic theme/rb.basic/head.sub.php

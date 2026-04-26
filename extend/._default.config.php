@@ -1,2 +1,2 @@
 <?php
-// Disabled AppleDouble default config stub. Must not emit output before headers.
+// Disabled AppleDouble stub. Must not emit output before headers.
