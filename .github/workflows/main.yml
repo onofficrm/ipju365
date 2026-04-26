@@ -9,6 +9,7 @@ on:
 jobs:
   ftp-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
@@ -28,7 +29,9 @@ jobs:
         run: |
           set -euxo pipefail
 
-          lftp -d -u "$FTP_USERNAME","$FTP_PASSWORD" -p "$FTP_PORT" "$FTP_SERVER" <<EOF
+          FTP_PORT="${FTP_PORT:-21}"
+
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -p "$FTP_PORT" "$FTP_SERVER" <<EOF
           set ftp:passive-mode true
           set ssl:verify-certificate no
           set net:max-retries 2
@@ -38,31 +41,15 @@ jobs:
           set xfer:clobber true
           set cmd:fail-exit yes
 
-          pwd
-          ls
-
           cd public_html
-          pwd
-          ls
-
-          mirror -R ./ . \
-            --verbose=3 \
-            --parallel=1 \
-            --no-perms \
-            --exclude-glob .git* \
-            --exclude-glob .github \
-            --exclude-glob .DS_Store \
-            --exclude-glob .env \
-            --exclude-glob .env.* \
-            --exclude-glob *.log \
-            --exclude-glob node_modules \
-            --exclude-glob vendor \
-            --exclude-glob backups \
-            --exclude-glob tests \
-            --exclude-glob cache \
-            --exclude-glob session \
-            --exclude-glob tmp \
-            --exclude-glob data
+          put -O extend extend/_debugbar.extend.php
+          put -O extend extend/._debugbar.extend.php
+          put -O theme/rb.basic theme/rb.basic/index.php
+          put -O theme/rb.basic theme/rb.basic/head.php
+          put -O theme/rb.basic theme/rb.basic/head.sub.php
+          put -O theme/rb.basic theme/rb.basic/boon-build-home.php
+          put -O theme/rb.basic/boon-build theme/rb.basic/boon-build/home.php
+          put -O theme/rb.basic/boon-build theme/rb.basic/boon-build/home.css
 
           bye
           EOF
