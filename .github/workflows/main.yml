@@ -1,1 +1,68 @@
+name: Deploy to Server
 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Deploy via lftp
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+        run: |
+          set -euxo pipefail
+
+          lftp -d -u "$FTP_USERNAME","$FTP_PASSWORD" -p "$FTP_PORT" "$FTP_SERVER" <<EOF
+          set ftp:passive-mode true
+          set ssl:verify-certificate no
+          set net:max-retries 2
+          set net:timeout 20
+          set net:reconnect-interval-base 5
+          set net:reconnect-interval-max 10
+          set xfer:clobber true
+          set cmd:fail-exit yes
+
+          pwd
+          ls
+
+          cd public_html
+          pwd
+          ls
+
+          mirror -R ./ . \
+            --verbose=3 \
+            --parallel=1 \
+            --no-perms \
+            --exclude-glob .git* \
+            --exclude-glob .github \
+            --exclude-glob .DS_Store \
+            --exclude-glob .env \
+            --exclude-glob .env.* \
+            --exclude-glob *.log \
+            --exclude-glob node_modules \
+            --exclude-glob vendor \
+            --exclude-glob backups \
+            --exclude-glob tests \
+            --exclude-glob cache \
+            --exclude-glob session \
+            --exclude-glob tmp \
+            --exclude-glob data
+
+          bye
+          EOF
