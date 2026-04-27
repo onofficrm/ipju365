@@ -103,48 +103,6 @@ $boon_build_faqs = array(
 
 <link rel="stylesheet" href="<?php echo G5_THEME_URL; ?>/boon-build/home.css?ver=<?php echo $boon_build_css_ver; ?>">
 <div class="boon-build">
-    <header class="boon-build__site-header">
-        <div class="boon-build__container">
-            <div class="boon-build__site-header-inner">
-                <a href="<?php echo G5_URL; ?>" class="boon-build__brand" aria-label="<?php echo $boon_build_site_title; ?>">
-                    <?php if ($boon_build_logo_url) { ?>
-                    <img src="<?php echo $boon_build_logo_url; ?>" alt="<?php echo $boon_build_site_title; ?>">
-                    <?php } else { ?>
-                    <span class="boon-build__brand-mark"><?php echo boon_build_icon('spark'); ?></span>
-                    <span><?php echo $boon_build_site_title; ?></span>
-                    <?php } ?>
-                </a>
-
-                <nav class="boon-build__desktop-nav" aria-label="메인 메뉴">
-                    <?php foreach ($boon_build_nav as $boon_build_nav_item) { ?>
-                    <a href="<?php echo $boon_build_nav_item['href']; ?>" class="boon-build__desktop-link"><?php echo $boon_build_nav_item['label']; ?></a>
-                    <?php } ?>
-                </nav>
-
-                <div class="boon-build__desktop-actions">
-                    <a href="tel:<?php echo $boon_build_phone; ?>" class="boon-build__login-link"><?php echo $boon_build_phone; ?></a>
-                    <a href="#boon-build-region" class="boon-build__button boon-build__button--header">지역 찾기</a>
-                </div>
-
-                <button type="button" class="boon-build__menu-toggle" aria-expanded="false" aria-controls="boon-build-mobile-nav">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-
-        <div class="boon-build__mobile-nav" id="boon-build-mobile-nav" hidden>
-            <div class="boon-build__container">
-                <nav class="boon-build__mobile-nav-inner" aria-label="모바일 메인 메뉴">
-                    <?php foreach ($boon_build_nav as $boon_build_nav_item) { ?>
-                    <a href="<?php echo $boon_build_nav_item['href']; ?>" class="boon-build__mobile-link"><?php echo $boon_build_nav_item['label']; ?></a>
-                    <?php } ?>
-                </nav>
-            </div>
-        </div>
-    </header>
-
     <section class="boon-build__hero boon-build__full-bleed" id="boon-build-home">
         <div class="boon-build__hero-media">
             <img src="https://ipju365.kr/data/editor/2604/f74fe487082181366583f752aa8e38dd_1775010246_4278.png" alt="공감 입주 청소">
@@ -379,8 +337,6 @@ $boon_build_faqs = array(
 (function() {
     var root = document.querySelector('.boon-build');
     var body = document.body;
-    var toggle = document.querySelector('.boon-build__menu-toggle');
-    var mobileNav = document.getElementById('boon-build-mobile-nav');
     var activeRegion = '서울';
     var regionSearch = document.getElementById('boon-build-region-search');
     var regionTabs = document.getElementById('boon-build-region-tabs');
@@ -545,23 +501,6 @@ $boon_build_faqs = array(
 
     if (body) {
         body.classList.add('boon-build-home');
-    }
-
-    if (toggle && mobileNav) {
-        toggle.addEventListener('click', function() {
-            var expanded = this.getAttribute('aria-expanded') === 'true';
-            this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-            mobileNav.hidden = expanded;
-            root.classList.toggle('is-mobile-nav-open', !expanded);
-        });
-
-        mobileNav.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                toggle.setAttribute('aria-expanded', 'false');
-                mobileNav.hidden = true;
-                root.classList.remove('is-mobile-nav-open');
-            });
-        });
     }
 
     if (regionTabs) {
