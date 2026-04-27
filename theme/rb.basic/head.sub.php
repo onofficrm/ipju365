@@ -48,46 +48,24 @@ header("Pragma: no-cache"); // HTTP/1.0
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- } -->
 
-<?php if(isset($seo['se_title']) && $seo['se_title'] || isset($seo['se_keywords']) && $seo['se_keywords'] || isset($seo['se_description']) && $seo['se_description']) { ?>
-<!-- META { -->
-<meta name="title" content="<?php echo $seo['se_title'] ?>" />
-<meta name="keywords" content="<?php echo $seo['se_keywords'] ?>" />
-<meta name="description" content="<?php echo $seo['se_description'] ?>" />
-<meta name="robots" content="index,follow" />
-<!-- } --
-<?php } ?>
+<?php
+$ipju365_board_seo_meta = function_exists('ipju365_get_board_seo_meta') ? ipju365_get_board_seo_meta() : array();
+if (!empty($ipju365_board_seo_meta)) {
+    echo ipju365_render_board_seo_meta($ipju365_board_seo_meta);
+} else {
+?>
+    <?php if(isset($seo['se_title']) && $seo['se_title'] || isset($seo['se_keywords']) && $seo['se_keywords'] || isset($seo['se_description']) && $seo['se_description']) { ?>
+    <!-- META { -->
+    <meta name="title" content="<?php echo $seo['se_title'] ?>" />
+    <meta name="keywords" content="<?php echo $seo['se_keywords'] ?>" />
+    <meta name="description" content="<?php echo $seo['se_description'] ?>" />
+    <meta name="robots" content="index,follow" />
+    <!-- } -->
+    <?php } ?>
 
-<!-- OG { -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="<?php echo getCurrentUrl() ?>" />
-<?php if(isset($bo_table) && $bo_table && $wr_id) { ?>
-   
-    <?php                     
-        //게시물 정보
-        $views = get_view($write, $board, $board_skin_path);
-        $meta_title = $views['wr_subject']; 
-
-        if(isset($views['file'][0]['file']) && $views['file'][0]['file']) {
-            $meta_img = G5_DATA_URL.'/file/'.$bo_table.'/'.urlencode($views['file'][0]['file']);
-        } else { 
-            $matches = get_editor_image($views['wr_content']);
-            for ($i = 0; $i < count($matches[1]); $i++){
-                $img = $matches[1][$i];
-                preg_match("/src=[\'\"]?([^>\'\"]+[^>\'\"]+)/i", $img, $m); $src = $m[1];
-            }
-            $meta_img = isset($src) ? $src : '';
-        }
-        $meta_description_cut = strip_tags($views['wr_content']);
-        $meta_description_cut = preg_replace("/<(.*?)\>/","",$meta_description_cut);
-        $meta_description_cut = preg_replace("/&nbsp;/","",$meta_description_cut);
-        $meta_description = cut_str($meta_description_cut,100);
-    ?>
-    <meta property="og:title" content="<?php echo $views['wr_subject'] ?>"/>
-    <meta property="og:description" content="<?php echo $meta_description; ?>" />
-    <meta property="og:image" content="<?php echo $meta_img ?>?ver=<?php echo G5_TIME_YMDHIS ?>"/>
-    
-<?php } else { ?>
-   
+    <!-- OG { -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo getCurrentUrl() ?>" />
     <?php if(isset($seo['se_og_title']) && $seo['se_og_title']) { ?>
         <meta property="og:title" content="<?php echo $seo['se_og_title'] ?>" />
     <?php } ?>
@@ -101,9 +79,8 @@ header("Pragma: no-cache"); // HTTP/1.0
     <?php if(isset($seo['se_og_image']) && $seo['se_og_image']) { ?>
         <meta property="og:image" content="<?php echo G5_URL ?>/data/seo/og_image?ver=<?php echo G5_TIME_YMDHIS ?>" />
     <?php } ?>
-
+    <!-- } -->
 <?php } ?>
-<!-- } -->
 
 <!-- ICO { -->
 <?php if(isset($seo['se_favicon']) && $seo['se_favicon']) { ?>
@@ -125,11 +102,14 @@ if(isset($seo['se_google_meta']) && $seo['se_google_meta']) {
 
 
 <?php
-if(isset($config['cf_add_meta']) && $config['cf_add_meta'])
-    echo $config['cf_add_meta'].PHP_EOL;
+if(isset($config['cf_add_meta']) && $config['cf_add_meta']) {
+    echo (!empty($ipju365_board_seo_meta) && function_exists('ipju365_filter_duplicate_seo_meta'))
+        ? ipju365_filter_duplicate_seo_meta($config['cf_add_meta']).PHP_EOL
+        : $config['cf_add_meta'].PHP_EOL;
+}
 ?>
 
-<title><?php echo $g5_head_title; ?></title>
+<title><?php echo !empty($ipju365_board_seo_meta['title']) ? ipju365_meta_escape($ipju365_board_seo_meta['title']) : $g5_head_title; ?></title>
 
 <?php
 $shop_css = '';
