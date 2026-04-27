@@ -21,17 +21,6 @@ body.boon-build-home {
     background: #fff;
 }
 
-body.boon-build-home #header,
-body.boon-build-home #hd,
-body.boon-build-home footer,
-body.boon-build-home #ft {
-    display: none !important;
-}
-
-body.boon-build-home #contents_wrap {
-    padding-top: 0 !important;
-}
-
 body.boon-build-home #contents_wrap > section.index {
     width: 100% !important;
 }
