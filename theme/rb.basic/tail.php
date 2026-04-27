@@ -72,8 +72,8 @@ $rb_footer_logo = !empty($rb_builder['bu_logo_pc_w']) ? G5_URL . '/data/logos/pc
             </div>
         </div>
     </footer>
+    </main>
     <?php } ?>
-</main>
 
 <?php
 include_once G5_PATH . '/tail.sub.php';
