@@ -17,6 +17,9 @@ if (G5_COMMUNITY_USE === false) {
     return;
 }
 
+// The homepage uses the single-row header so logo, menu, and auth buttons align together.
+$rb_core['layout_hd'] = 'basic';
+
 include_once G5_THEME_PATH . '/head.php';
 
 $rb_layout_name = isset($rb_core['layout']) ? $rb_core['layout'] : '';

@@ -51,6 +51,7 @@ jobs:
           put -O theme/rb.basic theme/rb.basic/boon-build-home.php
           put -O theme/rb.basic/rb.layout/boon-build theme/rb.basic/rb.layout/boon-build/index.php
           put -O theme/rb.basic/rb.layout/boon-build theme/rb.basic/rb.layout/boon-build/style.css
+          put -O theme/rb.basic/rb.layout_hd/basic theme/rb.basic/rb.layout_hd/basic/header.php
           put -O theme/rb.basic/boon-build theme/rb.basic/boon-build/home.php
           put -O theme/rb.basic/boon-build theme/rb.basic/boon-build/home.css
 
