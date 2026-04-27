@@ -307,25 +307,6 @@ $boon_build_faqs = array(
         </div>
     </section>
 
-    <footer class="boon-build__site-footer boon-build__full-bleed">
-        <div class="boon-build__container">
-            <div class="boon-build__site-footer-inner">
-                <?php if ($boon_build_logo_white_url) { ?>
-                <p class="boon-build__site-footer-logo">
-                    <img src="<?php echo $boon_build_logo_white_url; ?>" alt="<?php echo $boon_build_site_title; ?>">
-                </p>
-                <?php } ?>
-                <p class="boon-build__site-footer-copy">© <?php echo date('Y'); ?> <?php echo $boon_build_company_name; ?>. All rights reserved.</p>
-                <p class="boon-build__site-footer-info"><?php echo $boon_build_company_name; ?> | 대표: <?php echo $boon_build_owner; ?> | 사업자등록번호: <?php echo $boon_build_biz; ?></p>
-                <p class="boon-build__site-footer-info">대표전화: <?php echo $boon_build_phone; ?> | 주소: <?php echo $boon_build_address; ?></p>
-                <?php if ($boon_build_privacy) { ?>
-                <p class="boon-build__site-footer-info">개인정보책임자(이메일): <?php echo $boon_build_privacy; ?></p>
-                <?php } ?>
-                <p class="boon-build__site-footer-note"><?php echo $boon_build_footer_note; ?></p>
-            </div>
-        </div>
-    </footer>
-
     <div class="boon-build__floating">
         <a href="tel:<?php echo $boon_build_phone; ?>" class="boon-build__floating-button boon-build__floating-button--phone" title="전화 상담">
             <?php echo boon_build_icon('phone'); ?>
